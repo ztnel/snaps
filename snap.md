@@ -35,7 +35,7 @@ SSH is a service, so its not available until the system establishes an SSH conne
 
 ### SSH Setup with Ubuntu Core 18
 
-1. On client machine open bash terminal generate an RSA key pair using:
+1. On client machine open a bash terminal and generate an RSA key pair
 ```console
 foo@bar:~$ ssh-keygen -t rsa
 ```
