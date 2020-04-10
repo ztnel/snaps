@@ -1,6 +1,6 @@
 # Cumulative Guide to Ubuntu Snaps
 
-This guide is for user reference or an introduction to setting up Snaps on Ubuntu Core 18 LTS.
+This guide is for user reference or an introduction to setting up Snaps on Ubuntu Core 18.
 
 ## Introduction to SSH
 
@@ -142,3 +142,6 @@ $ sudo snap enable htop
 $ sudo snap remove htop
 $ sudo snap remove --revision=1.1.2 htop
 ```
+
+### Ubuntu Core and Snapcraft
+Ubuntu core is a `strict` confinement OS. This means snaps installed on the system must be self-containing and cannot perform cross-system level activities. Therefor installing `classic` level confinement snaps is not possible. This restructs the installation of snapcraft and snap development. Look to a `classic` level OS confinement such as Ubuntu 18.04
