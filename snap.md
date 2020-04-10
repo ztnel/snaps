@@ -68,7 +68,7 @@ A snap is an immutable package for an application. Snaps work across a wide rang
 
 ### Versions and Revisions
 Versions and revisions convey different details about one specific release of a snap:
-> **Versions** are the release of the software being packages which is assigned by the developers.A version is a string assigned to a project by its developers according to their development practices which tells a user what content to expect from the snap.
+> **Versions** are the release of the software being packages which is assigned by the developers. A version is a string assigned to a project by its developers according to their development practices which tells a user what content to expect from the snap.
 
 > **Revisions** are the sequence number assigned by the store when the snap file was uploaded. A revision is an automated number assigned by the *Snap Store* giving each iteration of the snap a unique identifier in the channel.
 
