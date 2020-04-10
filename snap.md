@@ -37,7 +37,7 @@ SSH is a service, so its not available until the system establishes an SSH conne
 
 1. On client machine open bash terminal generate an RSA key pair using:
 ```console
-$ ssh-keygen -t rsa
+foo@bar:~$ ssh-keygen -t rsa
 ```
 
 2. Navigate to ~home/users/[username]/.ssh
