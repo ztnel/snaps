@@ -43,7 +43,7 @@ foo@bar:~$ ssh-keygen -t rsa
 2. Navigate to ~home/users/[username]/.ssh
 3. Read file contents:
 ```console
-$ cat id_rsa.pub
+foo@bar:~$ cat id_rsa.pub
 ```
 4. Copy the file contents and import the key into Ubunto SSO account to register the key with your account ID (email address)
 
@@ -57,5 +57,6 @@ To login:
 ```
 8. We are now able to remotely connect to the system using the provided connection specification:
 ```console
-$ ssh [user]@[ip_address]
+foo@bar:~$ ssh [user]@[ip_address]
+user@ip_address:~$
 ```
