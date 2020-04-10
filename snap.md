@@ -35,16 +35,14 @@ SSH is a service, so its not available until the system establishes an SSH conne
 
 ### SSH Setup with Ubuntu Core 18
 
-Setup SSH public key
-
 1. On client machine open bash terminal generate an RSA key pair using:
-```bash
+```console
 $ ssh-keygen -t rsa
 ```
 
 2. Navigate to ~home/users/[username]/.ssh
 3. Read file contents:
-```bash
+```console
 $ cat id_rsa.pub
 ```
 4. Copy the file contents and import the key into Ubunto SSO account to register the key with your account ID (email address)
@@ -52,12 +50,12 @@ $ cat id_rsa.pub
 5. Boot RPi and configure network settings
 6. Enter account ID (email address) for access to imported public keys. If the account has no imported public keys Ubuntu Core will produce an error message claiming the account setup is incomplete.
 7. Once configured with your Ubuntu SSO account, Ubuntu Core will provide host key fingerprints and login details in the format shown below:
-```bash
+```console
 To login:
     ssh [username]@[ip_address]
     ssh ...
 ```
-8. We are now able to remotely connect to the system using the provided connection specification
-```bash
+8. We are now able to remotely connect to the system using the provided connection specification:
+```console
 $ ssh [user]@[ip_address]
 ```
