@@ -51,7 +51,7 @@ nano snapcraft.yaml
 3. Runtime requirements
 4. Dependancies
 
-Each `part` requires a `source` and `plugin` definition. The `source` defines what the part does by its src location (ie. `git`, local directory etc..). The `plugin` extends the possible project types (i. `autotools`, `cmake`, `python3` etc...)
+Each `part` requires a `source` and `plugin` definition. The `source` defines what the part does by its src location (ie. `git`, local directory etc..). The `plugin` builds the source (i. `autotools`, `cmake`, `python3` etc...)
 
 Add a `parts` section to `snapcraft.yaml`:
 ```console
@@ -99,5 +99,99 @@ apps:
     command: bin/[snap_name]
 ```
 
+## Snap Iterations
+Snaps are build are performed in 4 stages:
+1. **pull**: downloads components needed to built part (`source`: header)
+2. **build**: constructs part from previously pulled components
+3. copy built component to staging area
+4. copy staging components to priming area then to final locations for resulting snap.
 
+Once a snap has underwent an initial build a new build using `snapcraft` will only build new or changes will be merged into a new snap. A more useful command for iterative build testing is `prime` which allows us to observe the snap before its created. `prime` tells snapcraft to build up until the prime stage of the buiild process and open a shell within the snap environment so we can observe the snap.
+```console
+$ snapcraft prime --shell --destructive-mode
+```
+Furthermore snapcraft provides a convienient `--debug` argument for opening a shell in the environment when an error occurs allowing for dynamic investigation of the error before resuming the build.
+```console
+$ snapcraft --debug --destructive-mode
+```
 
+Within the shell environment during a the `prime` stage you can navigate to `stage/bin` and verify the snap build is there but the `prime/bin` directory has yet to be created.
+
+In order to build a specific stage use the `prime`, `stage`, `build` or `pull` commands
+```console
+$ snapcraft prime
+```
+
+After a rebuild the snap must be reinstalled before the changes can be observed on the system.
+
+## Snap Parts
+Adding a gnu-bash terminal to our app allows us to simply extend the app to include bash.
+```console
+apps:
+  [...]
+  gnu-bash:
+    bash:
+      command: bash
+
+parts:
+  [...]  
+  gnu-bash:
+    source: http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz
+    plugin: autotools
+```
+
+By default all commands within a snap are exposed to the user as `[snap_name].[cmd_name]`. The `[snap_name]` prefix provides a namespace for the snap command that is seperate from that of other snaps. For example `[snap_name].bash` will map `[snap_name]`'s implementation of bash and not be overwritten by system binaries `/bin/bash` commmand which will always take prescedence over commands imported through snaps. Notably the namespace of `[snap_name]` is also `[snap_name]` so the full command would be `[snap_name].[snap_name]` but for simplification simply `[snap_name]` is accepted practice.
+
+This iteration of `[snap_name]` has two binaries being shipped: `hello` and `bash` commands. `snapcraft` creates a wrapper around the executables which set environment variables. `$SNAP/bin` will be prepended to your `$PATH`
+
+Rebuilding and running `[snap_name].bash` should yield a bash terminal. You can see the lit of environment variables for this scaled doen version of bash.
+
+## Removing devmode and Publishing
+Any user using `devmode` snaps will need to specify the `--devmode` argument as an explicit acknowledgment to trust you and your snap. Removing `devmode` also allows publishing to `stable` or `candidate` channels and users will be able to search for it using `snap find`. `beta` and `edge` channels are for less trusted snap iterations.
+
+To begin the publishing stage we need to remove `devmode` status. We do this by editing the confinement field to `strict`.
+```console
+$ nano snapcraft.yaml
+[...]
+confinement: strict
+[...]
+```
+Note that during `devmode` we ran a snap that wasn't signed by the Snap Store. The `--devmode` argument essentially tells the compiler that it was OK to install an unsigned snap in addition to it having unrestricted confinement. Since the `devmode` confinement parameter no longer exists we use the `--dangerous` argumnent to notify the compiler that its OK to install an unsigned snap without the `devmode` confinement.
+```console
+$ sudo snap install[snap_id].snap --dangerous
+```
+
+Notably while the snap's confined level is `strict` performing an operation that attempts to interact outside of the `\snap` folder is denied by the system. such as running
+```console
+$ hello.bash
+bash-4.3$ ls
+ls: cannot open directory '.': Permission denied
+```
+
+## Snap Store
+
+With a Ubuntu SSO account we can login and logout of our account using `snapcraft`
+```console
+$ snapcraft login
+Email: [ubuntu_sso_email]
+Password: [ubuntu_sso_pass]
+$ snapcraft logout
+```
+
+To register a snap name for a particular project we use the terminal
+```console
+$ snapcraft register [snap_name]
+```
+Verify that `snapcraft.yaml` `name:` field matches the snap name you registered with the Snap Store. When ready to push change the `grade:` field to `stable`. Finally rebuild. Also dont forget to remove older builds of your `devmode` projects from your system.
+
+## Pushing and Releasing
+Registering our snap with Snap Store involves a push command that allows anyone to install the snap.
+```console
+$ snapcraft push [snap_id].snap --release=[channel]
+```
+
+Finally we can release the snap to a `stable` channel allowing it to be immediately visible in the store. By default we start at revision `1` and release to `stable` channel.
+
+```console
+$ snapcraft release [snap_name] [revision] [channel]
+````
