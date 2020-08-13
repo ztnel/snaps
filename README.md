@@ -1,4 +1,4 @@
-# Snaps Setup for Ubuntu 18.04 LTS and Ubuntu Core 18
+# Guide to Python Snaps for core20
 
 1. [Setup Remote SSH for RPi Server](docs/ubuntu_ssh.md)
 2. [Introduction to Snaps](docs/snap.md)
