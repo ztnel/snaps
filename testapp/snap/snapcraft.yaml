@@ -4,7 +4,9 @@ version: '0.1'
 summary: python test package
 description: |
  test app for python
-
+architectures:
+     - build-on: arm64
+       run-on: arm64
 base: core20
 grade: stable
 confinement: strict
@@ -12,7 +14,9 @@ confinement: strict
 apps:
   testapp:
     command: bin/hello
-    plugs: [home,network-bind]
+    plugs: 
+      - home
+      - network-bind
 parts:
   testapp:
     plugin: python
