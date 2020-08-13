@@ -23,4 +23,3 @@ parts:
     source: .
     stage-packages: 
       - ncbi-blast+
-      - python3

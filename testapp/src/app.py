@@ -3,10 +3,10 @@
 import os,sys
 import subprocess
 
-def main():
-    "Run the application"
+class MainClass:
+    def __init__(self):
+        self.main()
 
-    print ('hello! this is a snap.')    
-
-if __name__ == '__main__':
-    main()
+    def main(self):
+        "Run the application"
+        print ('hello! this is a snap.')    
