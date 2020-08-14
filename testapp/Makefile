@@ -1,10 +1,17 @@
 
 SNAP=testapp
 SNAP_ARCH=arm64
+REV=0.1
 
 .PHONY: build
 build:
-	snapcraft --use-lxd --debug;
+	if [ $(venv)=lxd ];
+	then
+		snapcraft --use-lxd --debug;
+	else
+		# default to multipass
+		snapcraft --debug
+	fi
 
 .PHONY: dist
 dist:
@@ -13,13 +20,23 @@ dist:
 
 .PHONY: shell
 shell:
-	lxc start snapcraft-$(SNAP)
-	lxc exec snapcraft-$(SNAP) -- /bin/bash;
+	if [ $(venv)=lxd ];
+	then
+		lxc start snapcraft-$(SNAP)
+		lxc exec snapcraft-$(SNAP) -- /bin/bash;
+	else
+		multipass start snapcraft-$(SNAP)
+		multipass exec snapcraft-$(SNAP) -- /bin/bash;
+	fi
 
 .PHONY: clean
 clean:
-	snapcraft clean --use-lxd;
-
+	if [ $(venv)=lxd ];
+	then
+		snapcraft clean --use-lxd;
+	else
+		snapcraft clean
+	fi
 .PHONY: install
 install:
-	sudo snap install $(SNAP)_0.1_$(SNAP_ARCH).snap --devmode
+	sudo snap install $(SNAP)_$(REV)_$(SNAP_ARCH).snap --devmode
