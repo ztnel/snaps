@@ -1,5 +1,4 @@
 # Guide to Python Snaps for core20
 
-1. [Setup Remote SSH for RPi Server](docs/ubuntu_ssh.md)
-2. [Introduction to Snaps](docs/snap.md)
-3. [Snapcraft for snap development on RPi](docs/snapcraft.md)
+1. [Introduction to Snaps](docs/snap.md)
+2. [Snapcraft](docs/snapcraft.md)
