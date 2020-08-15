@@ -10,6 +10,9 @@ build: ## Build snap in virtual environment
 	else \
 		snapcraft --debug; fi
 
+.PHONY: all
+all : build install
+
 .PHONY: dist
 dist: ## Install python package using setup.py
 	python3 -m pip install --upgrade pip;
