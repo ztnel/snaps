@@ -6,10 +6,8 @@ REV=0.1
 .PHONY: build
 build: ## Build snap in virtual environment
 	@if [[ "$(venv)" == lxd ]]; then \
-		$(info Building using LXD platform) \
 		snapcraft --use-lxd --debug;\
 	else \
-		$(info Build defaulting to multipass platform) \
 		snapcraft --debug; fi
 
 .PHONY: dist
