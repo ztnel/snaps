@@ -1,4 +1,4 @@
-
+SHELL=/bin/bash
 SNAP=testapp
 SNAP_ARCH=arm64
 REV=0.1
