@@ -13,7 +13,7 @@ setup(
     install_requires=['future'],
     entry_points = {
         'console_scripts': [
-            'hello=src.app:main']
+            'hello=hello:main']
             },
     classifiers = ['Operating System :: OS Independent',
             'Programming Language :: Python :: 2.7',
