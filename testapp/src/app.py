@@ -8,5 +8,5 @@ class MainClass:
         self.main()
 
     def main(self):
-        "Run the application"
-        print ('hello! this is a snap.')    
+        """Run the application"""
+        print('hello! this is a snap.')    
