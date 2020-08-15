@@ -22,7 +22,7 @@ clean: ## Clean snap build VM components
 
 .PHONY: install
 install: ## Install snap using confined devmode (--dangerous implied with devmode)
-	sudo snap install $(SNAP)_$(REV)_$(SNAP_ARCH).snap --devmode
+	if [[ "$(venv)" == lxd ]]; then sudo snap install $(SNAP)_$(REV)_$(SNAP_ARCH).snap --devmode; else multipass launch -n snaps -v; multipass mount $(PWD) snaps:"$(PWD)" -v; multipass exec snaps -- sudo snap install --devmode "$(PWD)"/*.snap; fi
 
 .PHONY: help	
 help:
