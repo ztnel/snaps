@@ -2,13 +2,13 @@ from setuptools import setup
 import sys,os
 
 setup(
-    name = 'testapp',
+    name = 'hello',
     version = '0.1.0',
     description = 'Python test package',
     license='GPL v3',
     author = 'my name',
-    packages = ['src'],
-    package_data={'src': ['description.txt']
+    packages = ['hello'],
+    package_data={'hello': ['description.txt']
                  },
     install_requires=['future'],
     entry_points = {
