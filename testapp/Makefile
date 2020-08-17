@@ -38,6 +38,7 @@ clean: ## Clean snap build VM components
 	@if [ -f *.snap ]; then \
 		rm -v *.snap; \
 	fi;
+	@multipass exec snaps -- sudo snap remove testapp; 
 	
 
 .PHONY: install
