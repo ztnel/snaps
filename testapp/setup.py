@@ -11,10 +11,13 @@ setup(
     package_data={'hello': ['description.txt']
                  },
     install_requires=['future'],
-    entry_points = {
-        'console_scripts': [
-            'hello=hello:main']
-            },
+    scripts = [
+        'bin/hello'
+    ]
+    # entry_points = {
+    #     'console_scripts': [
+    #         'hello=hello:main']
+    #         },
     classifiers = ['Operating System :: OS Independent',
             'Programming Language :: Python :: 2.7',
             'Programming Language :: Python :: 3.6',
