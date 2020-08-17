@@ -38,6 +38,7 @@ clean: ## Clean snap build VM components
 		snapcraft clean --use-lxd; \
 	else \
 		snapcraft clean; fi
+	rm -v *.snap
 
 .PHONY: install
 install: ## Install snap using confined devmode (--dangerous implied with devmode)

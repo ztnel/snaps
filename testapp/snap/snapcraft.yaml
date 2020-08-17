@@ -1,11 +1,10 @@
 name: testapp
 version: '0.1'
-#version-script: git describe --abbrev=1 --tags
 summary: python test package
 description: |
  test app for python
 base: core20
-grade: stable
+grade: devel
 confinement: strict
 
 apps:
@@ -14,6 +13,7 @@ apps:
     plugs: 
       - home
       - network-bind
+
 parts:
   testapp:
     plugin: python
