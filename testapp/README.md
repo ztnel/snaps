@@ -60,7 +60,7 @@ parts:
     source: .
     # fix for sys.path not including dist-packages for wheel
     build-environment:
-      - PYTHONPATH: "$SNAPCRAFT_PART_INSTALL/usr/lib/python3/dist-packages"
+      - PYTHONPATH: "$SNAPCRAFT_PART_INSTALL/usr/lib/python3/dist-packages:$PYTHONPATH"
     stage-packages: # packages required for part to run (with python plugin)
       - python3-wheel
       - ncbi-blast+
