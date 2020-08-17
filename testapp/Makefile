@@ -48,7 +48,7 @@ install: ## Install snap using confined devmode (--dangerous implied with devmod
 		multipass launch -n snaps -v; \
 		multipass start snaps -v; \
 		multipass mount $(PWD) snaps:/home/ubuntu/snaps -v; \
-		multipass exec snaps -- sudo snap install --devmode /home/ubuntu/snaps/*.snap; fi
+		multipass exec snaps -- sudo snap install --devmode /home/ubuntu/snaps/testapp_0.1_amd64.snap; fi
 
 .PHONY: help	
 help:
