@@ -10,7 +10,9 @@ setup(
     packages = ['hello'],
     package_data={'hello': ['description.txt']
                  },
-    install_requires=['future'],
+    install_requires=[
+        'future'
+    ],
     scripts = [
         'bin/hello'
     ],
