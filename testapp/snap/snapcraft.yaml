@@ -4,9 +4,6 @@ version: '0.1'
 summary: python test package
 description: |
  test app for python
-architectures:
-     - build-on: arm64
-       run-on: arm64
 base: core20
 grade: stable
 confinement: strict
@@ -24,7 +21,7 @@ parts:
     # fix for sys.path not including dist-packages for wheel
     build-environment:
       - PYTHONPATH: "$SNAPCRAFT_PART_INSTALL/usr/lib/python3/dist-packages"
-    stage-packages:
+    stage-packages: # packages required for part to run (with python plugin)
       - python3-wheel
       - ncbi-blast+
     
