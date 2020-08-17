@@ -3,7 +3,7 @@ import subprocess
 
 class MainClass:
     def __init__(self):
-        self.main()
+        """ Nothing to see here ..."""
 
     def run(self):
         """Run the application"""
