@@ -13,7 +13,7 @@ setup(
     install_requires=['future'],
     scripts = [
         'bin/hello'
-    ]
+    ],
     # entry_points = {
     #     'console_scripts': [
     #         'hello=hello:main']
