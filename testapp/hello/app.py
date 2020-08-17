@@ -5,6 +5,6 @@ class MainClass:
     def __init__(self):
         self.main()
 
-    def main(self):
+    def run(self):
         """Run the application"""
-        print('hello! this is a snap.')    
+        print('hello! this is a snap.')
