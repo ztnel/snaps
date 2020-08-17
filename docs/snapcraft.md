@@ -146,6 +146,30 @@ This iteration of `[snap_name]` has two binaries being shipped: `hello` and `bas
 
 Rebuilding and running `[snap_name].bash` should yield a bash terminal. You can see the lit of environment variables for this scaled doen version of bash.
 
+## Snap Daemons and Shell Entry
+
+Snap daemons are executed as `root`. If your python app is packaged into a module and exeucted by a shell script (such as below) you need to ensure your `$PYTHONPATH` is updated to point to the snap's `site-packages`.
+```bash
+#!/bin/bash
+export HELLO="whateveryouwant"
+
+python3 -m hello
+```
+This is because upon executing the shell script the interpreter will not have access to the user level `$PYTHONPATH` which includes the snap's `site-packages`. To resolve this, ensure the daemon app appends the snap's `site-packages` to the `$PYTHONPATH`:
+```yaml
+apps:
+  testapp:
+    command: bin/hello
+    daemon: simple
+    plugs: 
+      - home
+      - network-bind
+    environment:
+      # daemons execute as root so the python paths must be updated
+      PYTHONPATH: $SNAP/lib/python3.8/site-packages:$PYTHONPATH
+```
+Otherwise the daemon will fail to find the module.
+
 ## Removing devmode and Publishing
 Any user using `devmode` snaps will need to specify the `--devmode` argument as an explicit acknowledgment to trust you and your snap. Removing `devmode` also allows publishing to `stable` or `candidate` channels and users will be able to search for it using `snap find`. `beta` and `edge` channels are for less trusted snap iterations.
 
