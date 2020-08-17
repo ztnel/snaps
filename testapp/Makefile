@@ -34,7 +34,7 @@ shell: start ## Launch active snap build VM and drop into shell
 
 .PHONY: clean
 clean: ## Clean snap build VM components
-	if [[ "$(venv)" == lxd ]]; then \
+	@if [[ "$(venv)" == lxd ]]; then \
 		snapcraft clean --use-lxd; \
 	else \
 		snapcraft clean; fi

@@ -14,11 +14,8 @@ setup(
     scripts = [
         'bin/hello'
     ],
-    # entry_points = {
-    #     'console_scripts': [
-    #         'hello=hello:main']
-    #         },
-    classifiers = ['Operating System :: OS Independent',
+    classifiers = [
+            'Operating System :: OS Independent',
             'Programming Language :: Python :: 2.7',
             'Programming Language :: Python :: 3.6',
             'Operating System :: MacOS :: MacOS X',
