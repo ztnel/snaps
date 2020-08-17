@@ -21,5 +21,10 @@ parts:
   testapp:
     plugin: python
     source: .
-    stage-packages: 
+    # fix for sys.path not including dist-packages for wheel
+    build-environment:
+      - PYTHONPATH: "$SNAPCRAFT_PART_INSTALL/usr/lib/python3/dist-packages"
+    stage-packages:
+      - python3-wheel
       - ncbi-blast+
+    
