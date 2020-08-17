@@ -45,6 +45,7 @@ install: ## Install snap using confined devmode (--dangerous implied with devmod
 		sudo snap install $(SNAP)_$(REV)_$(SNAP_ARCH).snap --devmode; \
 	else \
 		multipass launch -n snaps -v; \
+		multipass start snaps -v; \
 		multipass mount $(PWD) snaps:/home/ubuntu/snaps -v; \
 		multipass exec snaps -- sudo snap install --devmode /home/ubuntu/snaps/*.snap; fi
 
