@@ -1,7 +1,5 @@
 SHELL=/bin/bash
 SNAP=testapp
-SNAP_ARCH=arm64
-REV=0.1
 
 .PHONY: build
 build: ## Build snap in virtual environment
@@ -36,14 +34,16 @@ shell: start ## Launch active snap build VM and drop into shell
 clean: ## Clean snap build VM components
 	@if [[ "$(venv)" == lxd ]]; then \
 		snapcraft clean --use-lxd; \
-	else \
-		snapcraft clean; fi
-	rm -v *.snap
+	fi;
+	@if [ -f *.snap ]; then \
+		rm -v *.snap; \
+	fi;
+	
 
 .PHONY: install
 install: ## Install snap using confined devmode (--dangerous implied with devmode)
 	@if [[ "$(venv)" == lxd ]]; then \
-		sudo snap install $(SNAP)_$(REV)_$(SNAP_ARCH).snap --devmode; \
+		sudo snap install *.snap --devmode; \
 	else \
 		multipass launch -n snaps -v; \
 		multipass start snaps -v; \
