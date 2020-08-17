@@ -2,4 +2,4 @@
 
 export HELLO="hello"
 
-python -m hello
+python3 -m hello
