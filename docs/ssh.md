@@ -31,6 +31,39 @@ In essence, asymmetric encryption shares the function for encryption publicly bu
 ### SSH Caveats
 SSH is a service, so its not available until the system establishes an SSH connection. 
 
+### SSH Setup on Ubuntu 20.04
+Install `openssh-server` (headless images come with this installed):
+```bash
+sudo apt update
+sudo apt install openssh-server
+```
+Verify the service is running:
+```
+ $ sudo systemctl status ssh
+
+● ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
+     Active: active (running) since Thu 2020-10-22 11:55:14 EDT; 23s ago
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+   Main PID: 138773 (sshd)
+      Tasks: 1 (limit: 77018)
+     Memory: 1.2M
+     CGroup: /system.slice/ssh.service
+             └─138773 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+
+Oct 22 11:55:14 titan systemd[1]: Starting OpenBSD Secure Shell server...
+Oct 22 11:55:14 titan sshd[138773]: Server listening on 0.0.0.0 port 22.
+Oct 22 11:55:14 titan sshd[138773]: Server listening on :: port 22.
+Oct 22 11:55:14 titan systemd[1]: Started OpenBSD Secure Shell server.
+
+
+```
+And add a rule to the firewall to allow the ssh port to be accessed
+```
+sudo ufw allow ssh
+```
+
 ## SSH Setup with Ubuntu Core 18
 
 1. On client machine open a bash terminal and generate an RSA key pair
