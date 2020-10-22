@@ -64,29 +64,17 @@ And add a rule to the firewall to allow the ssh port to be accessed
 sudo ufw allow ssh
 ```
 
-## SSH Setup with Ubuntu Core 18
+## SSH Key Setup
 
 1. On client machine open a bash terminal and generate an RSA key pair
 ```console
 foo@bar:~$ ssh-keygen -t rsa
 ```
-
-2. Navigate to ~home/users/[username]/.ssh
-3. Read file contents:
-```console
-foo@bar:~$ cat id_rsa.pub
+2. Copy our public RSA key to the server under authorized keys:
+```bash
+cat ~/.ssh/id_rsa.pub | ssh username@remote_host "mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && chmod -R go= ~/.ssh && cat >> ~/.ssh/authorized_keys"
 ```
-4. Copy the file contents and import the key into Ubunto SSO account to register the key with your account ID (email address)
-
-5. Boot RPi and configure network settings
-6. Enter account ID (email address) for access to imported public keys. If the account has no imported public keys Ubuntu Core will produce an error message claiming the account setup is incomplete.
-7. Once configured with your Ubuntu SSO account, Ubuntu Core will provide host key fingerprints and login details in the format shown below:
-```console
-To login:
-    ssh [username]@[ip_address]
-    ssh ...
-```
-8. We are now able to remotely connect to the system using the provided connection specification:
+3. We are now able to remotely connect to the system using the provided connection specification:
 ```console
 foo@bar:~$ ssh [user]@[ip_address]
 user@ip_address:~$
