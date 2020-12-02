@@ -4,7 +4,6 @@
 Currently neither `multipass` or `lxd` have support for cross-platform builds without the use of https://snapcraft.io/build or `snapcraft remote-build`. These solutions are only supported for open-source project development.
 
 ## MacOSX
-
 Note: For MacOSX development only amd64 architectures can be built and tested.
 
 Homebrew has a package for snapcraft development:
@@ -66,6 +65,5 @@ parts:
       - ncbi-blast+
 ```
 
-## Ubuntu Server 20.04 (RPi)
-
-Note: For Ubuntu Server 20.04 development only `arm64` architectures can be built and tested.
+## RPi (arm64)
+Currently `multipass` has issues building snaps on RPi4 models and so I use `lxc` to build snaps on RPi systems.
