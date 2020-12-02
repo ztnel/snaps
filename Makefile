@@ -93,12 +93,9 @@ review: ## use third party review-tools pkg before publish
 
 .PHONY: publish
 publish: review ## publish the snap to the snapstore
+	@printf "${OKB}Registering snap ${OKG}${SNAP}${NC} with snapstore\n";
+	@snapcraft login
+	@snapcraft register ${SNAP}
 	@printf "${OKB}Publishing snap ${OKG}${SNAP}${NC} to snapstore\n";
-	@if [[ "$(VENV)" == rpi ]]; then \
-		sudo snap install *.snap --devmode; \
-	else \
-		multipass launch -n snaps -v; \
-		multipass start snaps -v; \
-		multipass mount $(PWD) snaps:/home/ubuntu/snaps -v; \
-		multipass exec snaps -- sudo snap install --devmode /home/ubuntu/snaps/*.snap; fi
+	@snapcraft push *.snap --release=${CHANNEL}
 	@printf "${OKG} ✓ ${NC} Complete\n";
