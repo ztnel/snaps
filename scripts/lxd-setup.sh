@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ -d "/snap/lxd" ];
 then
     echo "lxd already installed. Skipping install.."
