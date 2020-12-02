@@ -1,5 +1,6 @@
 from setuptools import setup
-import sys,os
+import sys
+import os
 
 setup(
     name = 'hello',
@@ -14,7 +15,8 @@ setup(
         'future'
     ],
     scripts = [
-        'bin/hello'
+        'bin/hello',
+        '/bin/vers'
     ],
     classifiers = [
             'Operating System :: OS Independent',
