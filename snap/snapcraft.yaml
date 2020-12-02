@@ -23,6 +23,12 @@ apps:
     plugs: 
       - home
       - network-bind
+  # executed with testapp.version or more generally <SNAP_NAME>.<CLI_CMD>
+  version: 
+    command: bin/vers
+    plugs: 
+      - home
+      - network-bind
 
 parts:
   testapp:
