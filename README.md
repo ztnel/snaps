@@ -1,10 +1,15 @@
-# Guide to Python Snaps for core20
+# Python Snaps for core20
+Updated: 2020-12
+![img](/docs/img/snapcraft-logo.jpg)
+
+Build python snaps for core20 on UNIX compatible ARM64 or AMD/Intel architectures.
 
 ## Navigation
 1. [Quickstart](#quickstart)
 2. [Introduction to Snaps](docs/snap.md)
 3. [Snapcraft](docs/snapcraft.md)
-4. [License](/LICENSE)
+4. [Building on MacOS](/docs/README.md)
+5. [License](/LICENSE)
 
 ## Quickstart
 Ensure you have build-essentials for `make` using apt or other package manager:
