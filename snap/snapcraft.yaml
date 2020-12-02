@@ -1,4 +1,4 @@
-name: testapp
+name: ${SNAP_NAME}
 version: '0.1'
 summary: python test package
 description: |
@@ -7,8 +7,8 @@ base: core20
 grade: devel
 confinement: strict
 architectures:
-  - build-on: arm64
-    run-on: arm64
+  - build-on: ${ARCH}
+    run-on: ${ARCH}
 
 apps:
   testapp:
