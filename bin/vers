@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# print software versions for snap
+sudo snap version
+# print snap version and tracking channel
+sudo snap info testapp
