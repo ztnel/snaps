@@ -10,7 +10,6 @@ architectures:
   - build-on: arm64
     run-on: arm64
 
-
 apps:
   testapp:
     command: bin/hello
