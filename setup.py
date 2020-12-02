@@ -6,7 +6,7 @@ setup(
     name = 'hello',
     version = '0.1.0',
     description = 'Python test package',
-    license='GPL v3',
+    license='MIT',
     author = 'my name',
     packages = ['hello'],
     package_data={'hello': ['description.txt']
@@ -16,7 +16,7 @@ setup(
     ],
     scripts = [
         'bin/hello',
-        '/bin/vers'
+        'bin/vers'
     ],
     classifiers = [
             'Operating System :: OS Independent',
