@@ -18,14 +18,14 @@ all : build install
 
 .PHONY: setup
 setup: ## setup snap build environment
-	@printf "${OKB} Setting up build environment on ${OKG} ${VENV} ${NC}\n";
+	@printf "${OKB}Setting up build environment on ${OKG}${VENV} ${NC}\n";
 	@if [[ "$(VENV)" == rpi ]]; then\
 		./scripts/lxd-setup.sh; fi;
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
 .PHONY: build
 build: ## Build snap in virtual environment
-	@printf "${OKB} Building snap on ${OKG} ${VENV} ${NC}\n";
+	@printf "${OKB}Building snap on ${OKG}${VENV} ${NC}\n";
 	@if [[ "${VENV}" == rpi ]]; then \
 		snapcraft --use-lxd --debug;\
 	else \
@@ -34,7 +34,7 @@ build: ## Build snap in virtual environment
 
 .PHONY: dist
 dist: ## Install python package using setup.py
-	@printf "${OKB} Building python package ... ${NC}\n";
+	@printf "${OKB}Building python package ... ${NC}\n";
 	@python3 -m pip install --upgrade pip;
 	@python3 -m pip install .;
 	@printf "${OKG} ✓ ${NC} Complete\n";
@@ -57,7 +57,7 @@ shell: start ## Launch active snap build VM and drop into shell
 
 .PHONY: clean
 clean: ## Clean snap build VM components
-	@printf "${OKB} Cleaning build artefacts ... ${NC}\n";
+	@printf "${OKB}Cleaning build artefacts ... ${NC}\n";
 	@if [[ "$(VENV)" == rpi ]]; then \
 		snapcraft clean --use-lxd; \
 	fi;
@@ -75,6 +75,30 @@ install: ## Install snap using confined devmode (--dangerous implied with devmod
 		multipass launch -n snaps -v; \
 		multipass start snaps -v; \
 		multipass mount $(PWD) snaps:/home/ubuntu/snaps -v; \
-		multipass exec snaps -- sudo snap install --devmode /home/ubuntu/snaps/testapp_0.1_amd64.snap; fi
+		multipass exec snaps -- /bin/bash sudo snap install --devmode /home/ubuntu/snaps/*.snap; fi
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
+.PHONY: review
+review: ## use third party review-tools pkg before publish
+	@printf "${OKB}Reviewing snap ${OKG}${SNAP}${NC}\n";
+	@if [[ "$(VENV)" == rpi ]]; then \
+		sudo snap install review-tools;\
+		(review-tools.snap-review *.snap -v && printf "${OKG} ✓ ${NC} Pass\n") || \
+			printf "${FAIL} ✗ ${NC} Fail\n"; \
+	else \
+		multipass exec snaps -- sudo snap install review-tools; \
+		(multipass exec snaps -- review-tools.snap-review *.snap -v && \
+			printf "${OKG} ✓ ${NC} Pass\n") || printf "${FAIL} ✗ ${NC} Fail\n"; fi;
+	
+
+.PHONY: publish
+publish: review ## publish the snap to the snapstore
+	@printf "${OKB}Publishing snap ${OKG}${SNAP}${NC} to snapstore\n";
+	@if [[ "$(VENV)" == rpi ]]; then \
+		sudo snap install *.snap --devmode; \
+	else \
+		multipass launch -n snaps -v; \
+		multipass start snaps -v; \
+		multipass mount $(PWD) snaps:/home/ubuntu/snaps -v; \
+		multipass exec snaps -- sudo snap install --devmode /home/ubuntu/snaps/*.snap; fi
+	@printf "${OKG} ✓ ${NC} Complete\n";
