@@ -18,7 +18,7 @@ sudo lxd init --auto
 
 #check if this returns the default storage pool to see if it's been initted
 var=$(lxc storage list |grep default)
-if ![ "$var" ];
+if ! [ "$var" ];
 then
         # create group for lxd permissions
 	sudo usermod -a -G lxd ${USER}
