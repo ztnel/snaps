@@ -6,6 +6,10 @@ description: |
 base: core20
 grade: devel
 confinement: strict
+architectures:
+  - build-on: arm64
+    run-on: arm64
+
 
 apps:
   testapp:
