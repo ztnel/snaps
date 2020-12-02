@@ -1,8 +1,10 @@
-
+# Source user env flags
+include .env
+export $(shell sed 's/=.*//' .env)
 
 .PHONY: build
 build: ## Build snap in virtual environment
-	@if [[ "$(venv)" == lxd ]]; then \
+	@if [[ "$(VENV)" == lxd ]]; then \
 		snapcraft --use-lxd --debug;\
 	else \
 		snapcraft --debug; fi
@@ -17,21 +19,21 @@ dist: ## Install python package using setup.py
 
 .PHONY: start
 start: ## Restarts an inactive instance
-	@if [[ "$(venv)" == lxd ]]; then \
+	@if [[ "$(VENV)" == lxd ]]; then \
 		lxc start snapcraft-$(SNAP);\
 	else \
 		multipass start snapcraft-$(SNAP); fi
 
 .PHONY: shell
 shell: start ## Launch active snap build VM and drop into shell
-	@if [[ "$(venv)" == lxd ]]; then \
+	@if [[ "$(VENV)" == lxd ]]; then \
 		lxc exec snapcraft-$(SNAP) -- /bin/bash; \
 	else \
 		multipass exec snapcraft-$(SNAP) -- /bin/bash; fi
 
 .PHONY: clean
 clean: ## Clean snap build VM components
-	@if [[ "$(venv)" == lxd ]]; then \
+	@if [[ "$(VENV)" == lxd ]]; then \
 		snapcraft clean --use-lxd; \
 	fi;
 	@if [ -f *.snap ]; then \
@@ -42,7 +44,7 @@ clean: ## Clean snap build VM components
 
 .PHONY: install
 install: ## Install snap using confined devmode (--dangerous implied with devmode)
-	@if [[ "$(venv)" == lxd ]]; then \
+	@if [[ "$(VENV)" == lxd ]]; then \
 		sudo snap install *.snap --devmode; \
 	else \
 		multipass launch -n snaps -v; \
