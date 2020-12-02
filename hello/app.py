@@ -1,4 +1,6 @@
-import os,sys
+import os
+import sys
+import time
 import subprocess
 
 class MainClass:
@@ -7,4 +9,6 @@ class MainClass:
 
     def run(self):
         """Run the application"""
-        print('hello! this is a snap.')
+        while True:
+            time.sleep(1)
+            os.system()

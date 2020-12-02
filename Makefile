@@ -1,5 +1,4 @@
-SHELL=/bin/bash
-SNAP=testapp
+
 
 .PHONY: build
 build: ## Build snap in virtual environment
