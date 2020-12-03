@@ -7,8 +7,8 @@ base: core20
 grade: devel
 confinement: strict
 architectures:
-  - build-on: ${ARCH}
-    run-on: ${ARCH}
+  - build-on: ${SNAP_ARCH}
+    run-on: ${SNAP_ARCH}
 
 apps:
   testapp:

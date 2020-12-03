@@ -55,6 +55,6 @@ with open(sys.argv[1], 'r') as stream:
         logging.exception("Environment variable required but was not specified: %s", exc)
     else:
         logging.info('Saving to build directory')
-        with open(os.environ['BUILD']+'/user-data', 'w') as outstream:
+        with open(sys.argv[1], 'w') as outstream:
             yaml.dump(user_cfg, outstream, default_flow_style=False)
     logging.info('Yaml parse complete')
