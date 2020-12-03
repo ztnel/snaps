@@ -46,15 +46,15 @@ start: ## Restarts an inactive instance
 	@if [[ "$(VENV)" == rpi ]]; then \
 		lxc start ${BUILD_VM};\
 	else \
-		multipass start snapcraft-$(SNAP_NAME); fi
+		multipass start ${BUILD_VM}; fi
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
 .PHONY: shell
 shell: start ## Launch active snap build VM and drop into shell
 	@if [[ "$(VENV)" == rpi ]]; then \
-		lxc exec snapcraft-$(SNAP_NAME) -- /bin/bash; \
+		lxc exec ${BUILD_VM} -- /bin/bash; \
 	else \
-		multipass exec snapcraft-$(SNAP_NAME) -- /bin/bash; fi
+		multipass exec ${BUILD_VM} -- /bin/bash; fi
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
 .PHONY: clean
@@ -81,10 +81,10 @@ install: ## Install snap using confined devmode (--dangerous implied with devmod
 	@if [[ "$(VENV)" == rpi ]]; then \
 		sudo snap install *.snap --devmode; \
 	else \
-		multipass launch -n snaps -v; \
-		multipass start snaps -v; \
-		multipass mount $(PWD) snaps:/home/ubuntu/snaps -v; \
-		multipass exec snaps -- cd snaps && sudo snap install --devmode *.snap; fi
+		multipass launch -n ${RUN_VM} -v; \
+		multipass start ${RUN_VM} -v; \
+		multipass mount $(PWD) ${RUN_VM}:/home/ubuntu/snaps -v; \
+		multipass exec ${RUN_VM} -- cd snaps && sudo snap install --devmode *.snap; fi
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
 .PHONY: review
