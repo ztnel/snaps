@@ -26,8 +26,9 @@ jobs:
         run: |
           sudo snap install review-tools;
           sudo snap install snapcraft --classic;
+          sudo snap install multipass --classic;
           python3 -m pip install -r requirements.txt;
-          
+
       - name: Run containerized snap build and install jobs
         run: |
           make build && review-tools.snap-review *.snap -v;
