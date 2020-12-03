@@ -4,3 +4,6 @@ rules:
   line-length:
     max: 120
     level: warning
+  truthy:
+    allowed-values: ['true', 'false', 'yes', 'no']
+    check-keys: false
