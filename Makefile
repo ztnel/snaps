@@ -27,7 +27,7 @@ setup: ## setup snap build environment
 build: ## Build snap in virtual environment
 	@printf "${OKB}Parsing snapcraft buildspec injecting ${OKG}${SNAP_NAME} ${ARCH}${NC}\n";
 	@python3 scripts/yaml_parser.py "./snap/snapcraft.yaml"
-	@printf "${OKB}Building snap ${OKG}${SNAP_NAME}${NC} on ${OKG}${VENV} ${NC}\n";
+	@printf "${OKB}Building snap ${OKG}${SNAP_NAME}${OKB} on channel ${OKG}${VENV}${NC}\n";
 	@if [[ "${VENV}" == rpi ]]; then \
 		snapcraft --use-lxd --debug;\
 	else \
@@ -44,7 +44,7 @@ dist: ## Install python package using setup.py
 .PHONY: start
 start: ## Restarts an inactive instance
 	@if [[ "$(VENV)" == rpi ]]; then \
-		lxc start snapcraft-$(SNAP_NAME);\
+		lxc start ${BUILD_VM};\
 	else \
 		multipass start snapcraft-$(SNAP_NAME); fi
 	@printf "${OKG} ✓ ${NC} Complete\n";
@@ -58,31 +58,37 @@ shell: start ## Launch active snap build VM and drop into shell
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
 .PHONY: clean
-clean: ## Clean snap build VM components
+clean: ## Clean snap build artefacts and teardown VM components
 	@printf "${OKB}Cleaning build artefacts ... ${NC}\n";
 	@if [[ "$(VENV)" == rpi ]]; then \
 		snapcraft clean --use-lxd; \
-	fi;
+		lxc stop ${BUILD_VM}; \
+		lxc unmount ${BUILD_VM};\
+		lxc delete ${BUILD_VM};\
+	else \
+		multipass stop ${BUILD_VM} ${RUN_VM}; \
+		multipass unmount ${BUILD_VM} ${RUN_VM}; \
+		multipass delete ${BUILD_VM} ${RUN_VM}; \
+		multipass purge; fi;
 	@if [ -f *.snap ]; then \
 		rm -v *.snap; \
 	fi;
-	@multipass exec snaps -- sudo snap remove testapp;
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
 .PHONY: install
 install: ## Install snap using confined devmode (--dangerous implied with devmode)
-	@printf "${OKB}Installing snap ${OKG}${VENV}${NC} in devmode\n";
+	@printf "${OKB}Installing snap ${OKG}${SNAP_NAME}${OKB} in devmode${NC}\n";
 	@if [[ "$(VENV)" == rpi ]]; then \
 		sudo snap install *.snap --devmode; \
 	else \
 		multipass launch -n snaps -v; \
 		multipass start snaps -v; \
 		multipass mount $(PWD) snaps:/home/ubuntu/snaps -v; \
-		multipass exec snaps -- /bin/bash sudo snap install --devmode /home/ubuntu/snaps/*.snap; fi
+		multipass exec snaps -- cd snaps && sudo snap install --devmode *.snap; fi
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
 .PHONY: review
-review: ## use third party review-tools pkg before publish
+review: ## lint using canonical approved review-tools lib
 	@printf "${OKB}Reviewing snap ${OKG}${SNAP_NAME}${NC}\n";
 	@if [[ "$(VENV)" == rpi ]]; then \
 		sudo snap install review-tools;\
