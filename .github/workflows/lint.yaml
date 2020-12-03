@@ -1,0 +1,28 @@
+---
+name: Snap Lint
+on:
+  pull_request:
+    type: [opened, synchronized, re-opened]
+    branches:
+      - master
+
+jobs:
+  lint:
+    name: Snap Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+
+      - name: Set up Python (latest).
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install lint dependencies.
+        run: |
+          sudo apt update
+          sudo apt install -y make shellcheck
+          python3 -m pip install yamllint flake8
+      - name: Run lint directive
+        run: make lint

@@ -1,8 +1,9 @@
 import os
-import sys
 import time
 
+
 class MainClass:
+
     def __init__(self):
         """ Nothing to see here ..."""
 

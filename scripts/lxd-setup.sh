@@ -23,7 +23,7 @@ var=$(lxc storage list |grep default)
 if ! [ "$var" ];
 then
         # create group for lxd permissions
-	sudo usermod -a -G lxd ${USER}
+	sudo usermod -a -G lxd "$USER"
 	echo "renewing session... "
         newgrp lxd
 fi
