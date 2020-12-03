@@ -24,7 +24,8 @@ jobs:
 
       - name: Install build dependancies
         run: |
-          sudo snap install review-tools
+          sudo snap install review-tools;
+          sudo snap install snapcraft --classic;
       - name: Run containerized snap build and install jobs
         run: |
           snapcraft && review-tools.snap-review *.snap -v;
