@@ -104,8 +104,8 @@ review: ## lint using canonical approved review-tools lib
 		(review-tools.snap-review *.snap -v && printf "${OKG} ✓ ${NC} Pass\n") || \
 			printf "${FAIL} ✗ ${NC} Fail\n"; \
 	else \
-		multipass exec snaps -- sudo snap install review-tools; \
-		(multipass exec snaps -- review-tools.snap-review *.snap -v && \
+		multipass exec ${RUN_VM} -- sudo snap install review-tools; \
+		(multipass exec ${RUN_VM} -- cd snaps && review-tools.snap-review *.snap -v && \
 			printf "${OKG} ✓ ${NC} Pass\n") || printf "${FAIL} ✗ ${NC} Fail\n"; fi;
 
 .PHONY: publish
