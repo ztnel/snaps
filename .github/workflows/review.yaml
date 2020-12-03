@@ -1,10 +1,13 @@
 ---
 name: Review Tools
 on:
-  pull_request:
-    type: [opened, synchronized, re-opened]
+  push:
     branches:
       - master
+# pull_request:
+#   type: [opened, synchronized, re-opened]
+#   branches:
+#     - master
 
 jobs:
   lint:
