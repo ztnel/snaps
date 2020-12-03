@@ -21,6 +21,7 @@ setup: ## setup snap build environment
 	@printf "${OKB}Setting up build environment on ${OKG}${VENV} ${NC}\n";
 	@if [[ "$(VENV)" == rpi ]]; then\
 		./scripts/lxd-setup.sh; fi;
+	@python3 -m pip install -r requirements.txt;
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
 .PHONY: lint
