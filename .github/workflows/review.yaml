@@ -28,4 +28,4 @@ jobs:
           sudo snap install snapcraft --classic;
       - name: Run containerized snap build and install jobs
         run: |
-          snapcraft && review-tools.snap-review *.snap -v;
+          make build && review-tools.snap-review *.snap -v;

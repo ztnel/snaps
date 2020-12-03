@@ -33,7 +33,7 @@ lint: ## Lint .yaml, .py and .sh files using yamllint, flake8 and shellcheck too
 	@(flake8 hello && printf "${OKG} ✓ ${NC} Pass\n"|| printf "${FAIL} ✗ ${NC} Fail\n")
 
 .PHONY: build
-build: lint ## Build snap in virtual environment
+build: ## Build snap in virtual environment
 	@printf "${OKB}Parsing snapcraft buildspec injecting ${OKG}${SNAP_NAME} ${ARCH}${NC}\n";
 	@python3 scripts/yaml_parser.py "./snap/snapcraft.yaml"
 	@printf "${OKB}Building snap ${OKG}${SNAP_NAME}${OKB} on ${OKG}${VENV}${NC}\n";
