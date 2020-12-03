@@ -27,7 +27,7 @@ setup: ## setup snap build environment
 build: ## Build snap in virtual environment
 	@printf "${OKB}Parsing snapcraft buildspec injecting ${OKG}${SNAP_NAME} ${ARCH}${NC}\n";
 	@python3 scripts/yaml_parser.py "./snap/snapcraft.yaml"
-	@printf "${OKB}Building snap on ${OKG}${VENV} ${NC}\n";
+	@printf "${OKB}Building snap ${OKG}${SNAP_NAME}${NC} on ${OKG}${VENV} ${NC}\n";
 	@if [[ "${VENV}" == rpi ]]; then \
 		snapcraft --use-lxd --debug;\
 	else \
@@ -44,17 +44,17 @@ dist: ## Install python package using setup.py
 .PHONY: start
 start: ## Restarts an inactive instance
 	@if [[ "$(VENV)" == rpi ]]; then \
-		lxc start snapcraft-$(SNAP);\
+		lxc start snapcraft-$(SNAP_NAME);\
 	else \
-		multipass start snapcraft-$(SNAP); fi
+		multipass start snapcraft-$(SNAP_NAME); fi
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
 .PHONY: shell
 shell: start ## Launch active snap build VM and drop into shell
 	@if [[ "$(VENV)" == rpi ]]; then \
-		lxc exec snapcraft-$(SNAP) -- /bin/bash; \
+		lxc exec snapcraft-$(SNAP_NAME) -- /bin/bash; \
 	else \
-		multipass exec snapcraft-$(SNAP) -- /bin/bash; fi
+		multipass exec snapcraft-$(SNAP_NAME) -- /bin/bash; fi
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
 .PHONY: clean
@@ -71,6 +71,7 @@ clean: ## Clean snap build VM components
 
 .PHONY: install
 install: ## Install snap using confined devmode (--dangerous implied with devmode)
+	@printf "${OKB}Installing snap ${OKG}${VENV}${NC} in devmode\n";
 	@if [[ "$(VENV)" == rpi ]]; then \
 		sudo snap install *.snap --devmode; \
 	else \
@@ -82,7 +83,7 @@ install: ## Install snap using confined devmode (--dangerous implied with devmod
 
 .PHONY: review
 review: ## use third party review-tools pkg before publish
-	@printf "${OKB}Reviewing snap ${OKG}${SNAP}${NC}\n";
+	@printf "${OKB}Reviewing snap ${OKG}${SNAP_NAME}${NC}\n";
 	@if [[ "$(VENV)" == rpi ]]; then \
 		sudo snap install review-tools;\
 		(review-tools.snap-review *.snap -v && printf "${OKG} ✓ ${NC} Pass\n") || \
@@ -91,13 +92,12 @@ review: ## use third party review-tools pkg before publish
 		multipass exec snaps -- sudo snap install review-tools; \
 		(multipass exec snaps -- review-tools.snap-review *.snap -v && \
 			printf "${OKG} ✓ ${NC} Pass\n") || printf "${FAIL} ✗ ${NC} Fail\n"; fi;
-	
 
 .PHONY: publish
 publish: review ## publish the snap to the snapstore
-	@printf "${OKB}Registering snap ${OKG}${SNAP}${NC} with snapstore\n";
+	@printf "${OKB}Registering snap ${OKG}${SNAP_NAME}${NC} with snapstore\n";
 	@snapcraft login
-	@snapcraft register ${SNAP}
-	@printf "${OKB}Publishing snap ${OKG}${SNAP}${NC} to snapstore\n";
-	@snapcraft push *.snap --release=${CHANNEL}
+	@snapcraft register ${SNAP_NAME}
+	@printf "${OKB}Publishing snap ${OKG}${SNAP_NAME}${NC} to snapstore\n";
+	@snapcraft upload *.snap --release=${CHANNEL}
 	@printf "${OKG} ✓ ${NC} Complete\n";
