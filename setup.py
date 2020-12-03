@@ -7,10 +7,11 @@ setup(
     version = '0.1.0',
     description = 'Python test package',
     license='MIT',
-    author = 'my name',
+    author = 'Christian',
     packages = ['hello'],
-    package_data={'hello': ['description.txt']
-                 },
+    package_data={
+        'hello': ['description.txt']
+    },
     install_requires=[
         'future'
     ],
@@ -19,11 +20,7 @@ setup(
         'bin/vers'
     ],
     classifiers = [
-            'Operating System :: OS Independent',
-            'Programming Language :: Python :: 2.7',
-            'Programming Language :: Python :: 3.6',
-            'Operating System :: MacOS :: MacOS X',
-            'Operating System :: Microsoft :: Windows',
-            'Operating System :: POSIX',
-            'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'],
+        'Programming Language :: Python :: 3.8',
+        'License :: OSI Approved :: MIT License'
+    ],
 )
