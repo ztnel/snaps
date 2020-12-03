@@ -23,8 +23,17 @@ setup: ## setup snap build environment
 		./scripts/lxd-setup.sh; fi;
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
+.PHONY: lint
+lint: ## Lint .yaml, .py and .sh files using yamllint, flake8 and shellcheck tools
+	@printf "${OKB} Linting ${OKG}.yaml ${OKB}filesystems ...${NC}\n";
+	@(yamllint . && printf "${OKG} ✓ ${NC} Pass\n"|| printf "${FAIL} ✗ ${NC} Fail\n")
+	@printf "${OKB} Linting ${OKG}.sh ${OKB}filesystems ...${NC}\n";
+	@(shellcheck bin/* scripts/*.sh && printf "${OKG} ✓ ${NC} Pass\n"|| printf "${FAIL} ✗ ${NC} Fail\n")
+	@printf "${OKB} Linting ${OKG}.py ${OKB}filesystems ...${NC}\n";
+	@(flake8 hello && printf "${OKG} ✓ ${NC} Pass\n"|| printf "${FAIL} ✗ ${NC} Fail\n")
+
 .PHONY: build
-build: ## Build snap in virtual environment
+build: lint ## Build snap in virtual environment
 	@printf "${OKB}Parsing snapcraft buildspec injecting ${OKG}${SNAP_NAME} ${ARCH}${NC}\n";
 	@python3 scripts/yaml_parser.py "./snap/snapcraft.yaml"
 	@printf "${OKB}Building snap ${OKG}${SNAP_NAME}${OKB} on ${OKG}${VENV}${NC}\n";
