@@ -1,4 +1,6 @@
 # Python Snaps for core20
+[![python-testapp](https://snapcraft.io/python-testapp/badge.svg)](https://snapcraft.io/python-testapp)
+[![python-testapp](https://snapcraft.io/python-testapp/trending.svg?name=0)](https://snapcraft.io/python-testapp)
 [![Review Tools](https://github.com/cSDes1gn/snaps/workflows/Review%20Tools/badge.svg)](https://github.com/cSDes1gn/snaps/actions?query=workflow%3A%22Review+Tools%22)
 [![Snap Lint](https://github.com/cSDes1gn/snaps/workflows/Snap%20Lint/badge.svg)](https://github.com/cSDes1gn/snaps/actions?query=workflow%3A%22Snap+Lint%22)
 
