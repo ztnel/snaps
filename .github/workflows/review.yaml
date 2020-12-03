@@ -1,0 +1,27 @@
+---
+name: Review Tools
+on:
+  pull_request:
+    type: [opened, synchronized, re-opened]
+    branches:
+      - master
+
+jobs:
+  lint:
+    name: Review Tools
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+
+      - name: Set up Python (latest).
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install build dependancies
+        run: |
+          sudo snap install review-tools
+      - name: Run containerized snap build and install jobs
+        run: |
+          snapcraft && review-tools.snap-review *.snap -v;
