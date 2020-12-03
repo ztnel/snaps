@@ -27,7 +27,7 @@ setup: ## setup snap build environment
 build: ## Build snap in virtual environment
 	@printf "${OKB}Parsing snapcraft buildspec injecting ${OKG}${SNAP_NAME} ${ARCH}${NC}\n";
 	@python3 scripts/yaml_parser.py "./snap/snapcraft.yaml"
-	@printf "${OKB}Building snap ${OKG}${SNAP_NAME}${OKB} on channel ${OKG}${VENV}${NC}\n";
+	@printf "${OKB}Building snap ${OKG}${SNAP_NAME}${OKB} on ${OKG}${VENV}${NC}\n";
 	@if [[ "${VENV}" == rpi ]]; then \
 		snapcraft --use-lxd --debug;\
 	else \
