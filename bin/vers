@@ -1,6 +1,6 @@
 #!/bin/bash
 
 # print software versions for snap
-sudo snap version
+snap version
 # print snap version and tracking channel
-sudo snap info python-testapp
+snap info python-testapp
