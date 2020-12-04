@@ -1,6 +1,0 @@
-#!/bin/bash
-
-# print software versions for snap
-snap version
-# print snap version and tracking channel
-snap info python-testapp

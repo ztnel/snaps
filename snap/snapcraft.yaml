@@ -12,30 +12,19 @@ architectures:
     run-on: ${SNAP_ARCH}
 
 apps:
-  testapp:
-    command: bin/hello
+  ${SNAP_NAME}:
+    command: bin/app
     daemon: simple
     plugs:
       - home
       - network-bind
+      - framebuffer
     environment:
       # daemons execute as root so the python paths must be updated
       PYTHONPATH: $SNAP/lib/python3.8/site-packages:$PYTHONPATH
-  # executed with testapp.testcli or more generally <SNAP_NAME>.<CLI_CMD>
-  testcli:
-    command: bin/hello
-    plugs:
-      - home
-      - network-bind
-  # executed with testapp.version or more generally <SNAP_NAME>.<CLI_CMD>
-  version:
-    command: bin/vers
-    plugs:
-      - home
-      - network-bind
 
 parts:
-  testapp:
+  app:
     plugin: python
     source: .
     # fix for sys.path not including dist-packages for wheel

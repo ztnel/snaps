@@ -1,5 +1,0 @@
-#!/bin/bash
-
-export HELLO="hello"
-
-python3 -m hello

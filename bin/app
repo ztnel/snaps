@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# sdl config for rpi
+# export SDL_FBDEV='/dev/fb0'
+# export SDL_VIDEODRIVER='fbcon'
+# export SDL_VIDEO_CENTERED='1'
+# export SDL_NOMOUSE='1'
+
+echo "test"
+python3 -m app
