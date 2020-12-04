@@ -38,10 +38,10 @@ build: ## Build snap in virtual environment
 	@printf "${OKB}Parsing snapcraft buildspec injecting ${OKG}${SNAP_NAME} ${ARCH}${NC}\n";
 	@python3 scripts/yaml_parser.py "./snap/snapcraft.yaml"
 	@printf "${OKB}Building snap ${OKG}${SNAP_NAME}${OKB} on ${OKG}${VENV}${NC}\n";
-	@if [[ "${VENV}" != rpi || ${SNAPCRAFT_BUILD_ENVIRONMENT} == host ]]; then \
-		snapcraft --debug; fi
+	@if [[ "${VENV}" != rpi || "${SNAPCRAFT_BUILD_ENVIRONMENT}" == host ]]; then \
+		snapcraft --debug; \
 	else \
-		snapcraft --use-lxd --debug;\
+		snapcraft --use-lxd --debug; fi
 	@printf "${OKG} ✓ ${NC} Complete\n";
 
 .PHONY: dist
