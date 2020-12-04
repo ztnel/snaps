@@ -1,4 +1,8 @@
 import pygame
-from pygame.examples import aliens
+from pygame.examples import moveit
 
-aliens.main()
+pygame.display.init()
+pygame.display.set_mode()
+# pygame.display.flip()
+pygame.mouse.set_visible(False)
+moveit.main()
