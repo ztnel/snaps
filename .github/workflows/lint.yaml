@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - master
-pull_request:
-  type: [opened, synchronized, re-opened]
-  branches:
-    - master
+  pull_request:
+    type: [opened, synchronized, re-opened]
+    branches:
+      - master
 
 jobs:
   lint:
